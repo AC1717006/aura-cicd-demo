@@ -1,4 +1,4 @@
-DISCOUNT_RATE = 0.10  # 10% — badalna ho to bas yahan
+DISCOUNT_RATE = 0.50  # 10% — badalna ho to bas yahan
 
 
 def discount(amount):
