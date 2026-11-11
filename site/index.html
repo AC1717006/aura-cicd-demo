@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Discount Calculator</title>
+  <style>
+    :root { --bg: #0b1020; --card: #111827; --line: #334155; --text: #f8fafc; --muted: #94a3b8; --ok: #22c55e; --accent: #f97316; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; padding: 16px; }
+    main { width: 100%; max-width: 440px; background: var(--card); border: 2px solid var(--line); border-radius: 18px; padding: 28px; }
+    h1 { margin: 0 0 6px; font-size: 28px; }
+    p.rule { margin: 0 0 22px; color: var(--muted); }
+    label { display: block; font-weight: 600; margin-bottom: 8px; }
+    input { width: 100%; font-size: 22px; padding: 12px 14px; border-radius: 10px; border: 2px solid var(--line); background: #0e141b; color: var(--text); }
+    .out { margin-top: 22px; padding: 16px; border-radius: 12px; background: #0e1f16; border: 2px solid var(--ok); }
+    .out div { display: flex; justify-content: space-between; font-size: 20px; margin: 4px 0; }
+    .out b { color: var(--ok); }
+    footer { margin-top: 18px; font-size: 13px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Discount Calculator</h1>
+    <p class="rule">Order ₹1000 se upar ho to <b style="color: var(--accent)">10% discount</b>.</p>
+    <label for="amount">Order amount (₹)</label>
+    <input id="amount" type="number" min="0" value="1500" />
+    <div class="out" aria-live="polite">
+      <div><span>Discount</span><b id="discount">₹150</b></div>
+      <div><span>Pay karna hai</span><b id="total">₹1350</b></div>
+    </div>
+    <footer>Tested with pytest and deployed automatically by GitHub Actions.</footer>
+  </main>
+  <script>
+    const DISCOUNT_RATE = 0.10; // same rule as discount.py
+    function discount(amount) {
+      return amount > 1000 ? amount * DISCOUNT_RATE : 0;
+    }
+    const input = document.getElementById("amount");
+    function update() {
+      const amount = Number(input.value) || 0;
+      const d = discount(amount);
+      document.getElementById("discount").textContent = "₹" + d.toLocaleString("en-IN");
+      document.getElementById("total").textContent = "₹" + (amount - d).toLocaleString("en-IN");
+    }
+    input.addEventListener("input", update);
+    update();
+  </script>
+</body>
+</html>
